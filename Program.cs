@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+//estrysuiop´+s
 namespace CajeroLite
 {
     internal class Program
