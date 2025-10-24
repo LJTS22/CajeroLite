@@ -8,7 +8,7 @@ namespace CajeroLite
 {
     internal class IO
     {
-        // Muestra mensajes de info y erroeres
+        // Muestra mensajes de info y errores
         public static void MostrarMensaje(string mensaje, bool esError = false)
         {
             if (esError)

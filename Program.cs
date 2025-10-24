@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//estrysuiop´+sssss
+//io
 namespace CajeroLite
 {
     internal class Program
@@ -18,8 +18,8 @@ namespace CajeroLite
             IO.MostrarMensaje("Bienvenido al CajeroLite. Vamos a realizar algunas pruebas.");
 
             
-            string nombre = IO.CapturarEntrada("Ingresa tu nombre: ");
-            IO.MostrarMensaje($"Hola, {nombre}!");
+            string usuario = IO.CapturarEntrada("Ingresa tu usuario: ");
+            IO.MostrarMensaje($"Hola, {usuario}!");
 
          
             string pin = IO.LeerPIN("Por favor ingresa tu PIN: ");
