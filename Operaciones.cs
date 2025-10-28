@@ -1,82 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using CajeroLite.Data;
+using CajeroLite.IO;
 
 namespace CajeroLite.Operaciones
 {
-    public class Operaciones
+    public static class Operacion
     {
-        private decimal saldoActual;
-
-        public Operaciones(decimal saldoInicial = 0)
+        public static decimal ConsultarSaldo(int indiceUsuario)
         {
-            saldoActual = saldoInicial;
+            return Datos.Saldos[indiceUsuario];
         }
 
-        public (bool exitosa, string mensaje, decimal saldoAnterior, decimal saldoNuevo) RealizarDeposito(decimal monto)
+        public static void RealizarDeposito(int indiceUsuario)
         {
-
-            if (monto <= 0)
+            string montoStr = Io.IO_CapturarTexto("Ingrese el monto a depositar:");
+            if (decimal.TryParse(montoStr, out decimal monto) && monto > 0)
             {
-                return (false, "El monto a depositar debe ser mayor a cero.", saldoActual, saldoActual);
+                Datos.Saldos[indiceUsuario] += monto;
+                Io.IO_MostrarExito($"Depósito realizado. Nuevo saldo: {Datos.Saldos[indiceUsuario]:C}");
             }
-
-
-            decimal saldoAnterior = saldoActual;
-
-
-            saldoActual += monto;
-
-            return (true, $"Depósito exitoso. Se han depositado {monto:C}", saldoAnterior, saldoActual);
-        }
-
-        public (bool exitosa, string mensaje, decimal saldoAnterior, decimal saldoNuevo) RealizarRetiro(decimal monto)
-        {
-
-            if (monto <= 0)
+            else
             {
-                return (false, "El monto a retirar debe ser mayor a cero.", saldoActual, saldoActual);
-            }
-
-
-            if (monto > saldoActual)
-            {
-                return (false, $"Fondos insuficientes. Saldo disponible: {saldoActual:C}", saldoActual, saldoActual);
-            }
-
-
-            decimal saldoAnterior = saldoActual;
-
-
-            saldoActual -= monto;
-
-            return (true, $"Retiro exitoso. Se han retirado {monto:C}", saldoAnterior, saldoActual);
-        }
-
-        public decimal ConsultarSaldo()
-        {
-            return saldoActual;
-        }
-
-        public string ObtenerResumenSaldo()
-        {
-            return $"Saldo disponible: {saldoActual:C}";
-        }
-
-        public void EstablecerSaldo(decimal nuevoSaldo)
-        {
-            if (nuevoSaldo >= 0)
-            {
-                saldoActual = nuevoSaldo;
+                Io.IO_MostrarError("Monto inválido.");
             }
         }
 
-        public bool ValidarFondosSuficientes(decimal monto)
+        public static void RealizarRetiro(int indiceUsuario)
         {
-            return saldoActual >= monto && monto > 0;
+            string montoStr = Io.IO_CapturarTexto("Ingrese el monto a retirar:");
+            if (decimal.TryParse(montoStr, out decimal monto) && monto > 0)
+            {
+                if (Datos.Saldos[indiceUsuario] >= monto)
+                {
+                    Datos.Saldos[indiceUsuario] -= monto;
+                    Io.IO_MostrarExito($"Retiro exitoso. Nuevo saldo: {Datos.Saldos[indiceUsuario]:C}");
+                }
+                else
+                {
+                    Io.IO_MostrarError("Fondos insuficientes.");
+                }
+            }
+            else
+            {
+                Io.IO_MostrarError("Monto inválido.");
+            }
         }
     }
 }

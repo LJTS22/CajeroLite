@@ -1,34 +1,28 @@
 ﻿using System;
 
-namespace CajeroApp
+namespace CajeroLite.Utilidades
 {
-    class Program
+    public static class Utilidad
     {
-        static void Main(string[] args)
+        public static int ValidarOpcionMenu(string input, int min, int max)
         {
-            Console.WriteLine("=== Cajero Automático ===");
-            Console.WriteLine("1. Consultar saldo");
-            Console.WriteLine("2. Retirar dinero");
-            Console.WriteLine("3. Salir");
-            Console.Write("Seleccione una opción: ");
-            int opcion = int.Parse(Console.ReadLine());
-
-            if (UtilidadesCajero.ValidarOpcion(opcion, 1, 3))
+            if (int.TryParse(input, out int opcion))
             {
-                Console.WriteLine("Opción válida.");
-
-                if (opcion == 2)
-                {
-                    Console.Write("Ingrese el monto a retirar: ");
-                    decimal monto = decimal.Parse(Console.ReadLine());
-                    if (UtilidadesCajero.ValidarMonto(monto))
-                    {
-                        Console.WriteLine($"Se retirarán ${monto}");
-                    }
-                }
+                if (opcion >= min && opcion <= max) return opcion;
             }
+            return -1;
+        }
 
-            UtilidadesCajero.Pausar();
+        public static bool ValidarMonto(decimal monto)
+        {
+            return monto > 0;
+        }
+
+        public static void Pausar(string mensaje = "Presione cualquier tecla para continuar...")
+        {
+            Console.WriteLine($"\n{mensaje}");
+            Console.ReadKey();
         }
     }
 }
+
