@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CajeroLite
+namespace CajeroLite.IO
 {
-    internal class IO
+    public static class IO
     {
         // Muestra mensajes de info y errores
         public static void MostrarMensaje(string mensaje, bool esError = false)

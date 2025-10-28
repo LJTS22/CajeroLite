@@ -1,34 +1,121 @@
 ﻿using System;
 
-namespace CajeroApp
+namespace CajeroLite.Utilidades
 {
-    class Program
+    public static class Utilidades
     {
-        static void Main(string[] args)
+        public static bool MontoEsValido(decimal monto)
         {
-            Console.WriteLine("=== Cajero Automático ===");
-            Console.WriteLine("1. Consultar saldo");
-            Console.WriteLine("2. Retirar dinero");
-            Console.WriteLine("3. Salir");
-            Console.Write("Seleccione una opción: ");
-            int opcion = int.Parse(Console.ReadLine());
+            // Validaciones:
+            // 1. El monto debe ser positivo
+            // 2. El monto debe ser mayor a cero
+            // 3. El monto no debe ser excesivamente grande (límite práctico)
+            // 4. El monto debe tener máximo 2 decimales (para centavos)
 
-            if (UtilidadesCajero.ValidarOpcion(opcion, 1, 3))
+            if (monto <= 0)
             {
-                Console.WriteLine("Opción válida.");
+                Console.WriteLine(" El monto debe ser mayor a cero.");
+                return false;
+            }
 
-                if (opcion == 2)
+            if (monto > 1000000000) // Límite de mil millones
+            {
+                Console.WriteLine(" El monto excede el límite permitido.");
+                return false;
+            }
+
+            // Verificar que no tenga más de 2 decimales
+            if (decimal.Round(monto, 2) != monto)
+            {
+                Console.WriteLine(" El monto no puede tener más de 2 decimales.");
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool OpcionMenuEsValida(string opcion, string[] opcionesValidas)
+        {
+            if (string.IsNullOrWhiteSpace(opcion))
+            {
+                Console.WriteLine("❌ La opción no puede estar vacía.");
+                return false;
+            }
+
+            // Verificar si la opción está en el array de opciones válidas
+            foreach (string opcionValida in opcionesValidas)
+            {
+                if (opcionValida.Equals(opcion, StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.Write("Ingrese el monto a retirar: ");
-                    decimal monto = decimal.Parse(Console.ReadLine());
-                    if (UtilidadesCajero.ValidarMonto(monto))
-                    {
-                        Console.WriteLine($"Se retirarán ${monto}");
-                    }
+                    return true;
                 }
             }
 
-            UtilidadesCajero.Pausar();
+            Console.WriteLine($"❌ Opción '{opcion}' no válida. Opciones válidas: {string.Join(", ", opcionesValidas)}");
+            return false;
+        }
+
+        /// Método sobrecargado para validar opciones numéricas del menú
+        public static bool OpcionMenuEsValida(int opcion, int[] opcionesValidas)
+        {
+            foreach (int opcionValida in opcionesValidas)
+            {
+                if (opcionValida == opcion)
+                {
+                    return true;
+                }
+            }
+
+            Console.WriteLine($"❌ Opción '{opcion}' no válida. Opciones válidas: {string.Join(", ", opcionesValidas)}");
+            return false;
+        }
+        /// Pausa la ejecución de forma consistente donde sea necesario
+
+        public static void PausarEjecucion(string mensaje = "Presione cualquier tecla para continuar...")
+        {
+            if (!string.IsNullOrWhiteSpace(mensaje))
+            {
+                Console.WriteLine($"\n{mensaje}");
+            }
+            else
+            {
+                Console.WriteLine("\nPresione cualquier tecla para continuar...");
+            }
+
+            Console.ReadKey();
+            Console.WriteLine(); // Línea en blanco para mejor formato
+        }
+
+        /// Método adicional: Limpiar la consola de forma controlada
+
+        public static void LimpiarConsola()
+        {
+            Console.Clear();
+            Console.WriteLine("=== CAJERO AUTOMÁTICO LITE ===\n");
+        }
+
+        /// Método adicional: Validar formato de PIN
+        public static bool PinEsValido(string pin)
+        {
+            if (string.IsNullOrWhiteSpace(pin))
+            {
+                Console.WriteLine(" El PIN no puede estar vacío.");
+                return false;
+            }
+
+            if (pin.Length != 4)
+            {
+                Console.WriteLine(" El PIN debe tener exactamente 4 dígitos.");
+                return false;
+            }
+
+            if (!int.TryParse(pin, out _))
+            {
+                Console.WriteLine(" El PIN debe contener solo números.");
+                return false;
+            }
+
+            return true;
         }
     }
 }
