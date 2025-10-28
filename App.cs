@@ -136,9 +136,7 @@ namespace CajeroLite
             Console.WriteLine("1. Consultar saldo");
             Console.WriteLine("2. Retirar dinero");
             Console.WriteLine("3. Depositar dinero");
-            Console.WriteLine("4. Cambiar PIN");
             Console.WriteLine("5. Cerrar sesión");
-            Console.WriteLine("6. Salir del cajero");
             Console.Write("Seleccione una opción: ");
 
             string opcion = Console.ReadLine();
@@ -167,12 +165,9 @@ namespace CajeroLite
                     RealizarDeposito();
                     return true;
                 case "4":
-                    CambiarPin();
-                    return true;
-                case "5":
                     CerrarSesion();
                     return false;
-                case "6":
+                case "5":
                     return false;
                 default:
                     return true;
@@ -260,14 +255,7 @@ namespace CajeroLite
             }
         }
 
-        private static void CambiarPin()
-        {
-            LimpiarConsola();
-            Console.WriteLine("=== CAMBIAR PIN ===");
-            Console.WriteLine("Funcionalidad en desarrollo...");
-            Console.WriteLine("Próximamente podrá cambiar su PIN de seguridad.");
-            PausarEjecucion();
-        }
+    
 
         private static void CerrarSesion()
         {
