@@ -133,7 +133,6 @@ namespace CajeroLite
             LimpiarConsola();
             Console.WriteLine("=== MENÚ PRINCIPAL ===");
             Console.WriteLine($"Usuario: {usuarioAutenticado}");
-            Console.WriteLine($"Saldo actual: {operaciones.ConsultarSaldo():C}");
             Console.WriteLine("1. Consultar saldo");
             Console.WriteLine("2. Retirar dinero");
             Console.WriteLine("3. Depositar dinero");
@@ -290,10 +289,8 @@ namespace CajeroLite
         private static void MostrarBienvenida()
         {
             LimpiarConsola();
-            Console.WriteLine("BIENVENIDO A CAJERO AUTOMÁTICO LITE");
             Console.WriteLine("===================================");
-            Console.WriteLine("Usuarios disponibles: 1001, 2002");
-            Console.WriteLine("PINs correspondientes: 1234, 5678");
+            Console.WriteLine("BIENVENIDO A CAJERO AUTOMÁTICO LITE");
             Console.WriteLine("===================================");
             PausarEjecucion("Presione cualquier tecla para comenzar...");
         }
